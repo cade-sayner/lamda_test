@@ -17,6 +17,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token:  ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: eu-west-1
-      - run: zip -j lambda1.zip ./lambda1/index.js
-      - run: aws lambda update-function-code --function-name=CadeSayner --zip-file=fileb://lambda1.zip
+      - run: cp ./lambda/index.js index.js
+      - run: zip -j function.zip index.js
+      - run: aws lambda update-function-code --function-name=CadeSayner --zip-file=fileb://function.zip
 
