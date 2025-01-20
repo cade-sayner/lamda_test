@@ -4,32 +4,19 @@ on:
     branches:
       - main
 jobs:
-  deploy:
+  lambda1:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up AWS CLI
-        uses: aws-actions/configure-aws-credentials@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-
-      - name: Install Node.js dependencies
-        run: |
-          cd lambda1
-
-      - name: Zip Lambda function
-        run: |
-          cd lambda1
-          zip -r ../lambda1.zip *  # Zip the contents of the lambda1 folder (not the folder itself)
-
-      - name: Deploy to AWS Lambda
-        run: |
-          aws lambda update-function-code \
-            --function-name CadeSayner \
-            --zip-file fileb://lambda1.zip
+          aws-session-token:  ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: eu-west-1
+      - run: zip -j lambda1.zip ./lambda1/index.js
+      - run: aws lambda update-function-code --function-name=CadeSayner --zip-file=fileb://lambda1.zip
 
