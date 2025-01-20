@@ -18,6 +18,6 @@ jobs:
           aws-session-token:  ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: eu-west-1
       - run: cp ./lambda1/index.js index.mjs
-      - run: zip -j function.zip index.js
+      - run: zip -j function.zip index.mjs
       - run: aws lambda update-function-code --function-name=CadeSayner --zip-file=fileb://function.zip
 
