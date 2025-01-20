@@ -19,5 +19,5 @@ jobs:
           aws-region: eu-west-1
       - run: cp ./lambda1/index.js index.mjs
       - run: zip -j function.zip index.mjs
-      - run: aws lambda update-function-code --function-name=CadeSayner --zip-file=fileb://function.zip
+      - run: aws lambda create-function-code --function-name=CadeSayner --zip-file=fileb://function.zip
 
